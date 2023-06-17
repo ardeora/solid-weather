@@ -54,7 +54,21 @@ export default function App() {
         <button type="submit">Check Weather</button>
       </form>
 
-      <ErrorBoundary fallback={<div>Something Went Wrong</div>}>
+      <ErrorBoundary
+        fallback={(err, reset) => (
+          <div>
+            Something Went Wrong: {err.message}
+            <button
+              onClick={() => {
+                setCityName(undefined);
+                reset();
+              }}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+      >
         <Suspense fallback={<div>Loading...</div>}>
           <Show when={temperature()}>
             <p>
